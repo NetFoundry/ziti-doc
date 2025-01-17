@@ -97,9 +97,9 @@ This includes the protocol(s) used for router connections and how those connecti
         to indicate a controller address migration. Should only be specified when the new listener
         address is reachable as clients will begin to use the new value on restart
   - `peerHeartbeats` - (optional) set of options for configuring heartbeats to other controllers in
-    the cluster. See [heartbeats](./conventions.md/#heartbeats).
+    the cluster. See [heartbeats](./conventions.md#heartbeats).
   - `routerHeartbeats` - (optional) set of options for configuring heartbeats to routers.
-    See [heartbeats](./conventions.md/#heartbeats).
+    See [heartbeats](./conventions.md#heartbeats).
 
 Example w/o options:
 
@@ -237,6 +237,8 @@ The `edgeRouter` section controls the lifetime of router enrollment JWTs. It has
 
 ### `events`
 
+See [the events reference](../50-events.mdx) for a full description of each event type.
+
 The `events` section allows for the definition of multiple event loggers with their own handler and
 event subscriptions. Handlers define the type, format, and destination for events. Subscriptions
 handle which events are routed to the handler. This allows different events to be output in
@@ -253,26 +255,31 @@ omitted, it will not be output. The list of valid event types and their options 
       include ("created"
       and/or "
       deleted")
-- `edge.entityCounts` - (optional) edge entity counts (API Sessions, session entities, routers, etc.)
-    - `interval` - (optional) the time interval to generate entity count events on (e.g. "5s", "
-      5000ms", "1h")
-- `edge.sessions`  - (optional) Session events
-    - `include` - (optional) a string or array of strings that specify which Session events to
-      include ("created"
-      and/or "deleted")
 - `fabric.circuits`  - (optional) Fabric circuit events
     - `include` - (optional) a string or array of strings that specify which circuit events to
       include ("created", "
       pathUpdated", "
       deleted", "failed")
+- `cluster` - (optional) cluster events, emitted when there are changes to state of an HA controller cluster
+- `connect` - (optional) connect events, emitted when connetions are made to controllers and routers
+- `entityChange` - (optional) entity change events, emitted when there are changes to the data model
+- `edge.entityCounts` - (optional) edge entity counts (API Sessions, session entities, routers, etc.)
+    - `interval` - (optional) the time interval to generate entity count events on (e.g. "5s", "
+      5000ms", "1h")
 - `fabric.links` - - (optional) Fabric link events
-- `fabric.routers` - (optional) Fabric router events
-- `fabric.usage` - (optional) Fabric usage events
-    - `version` - (optional) a string representing the value of the usage event to use ("2' or "3")
 - `metrics` - (optional) - System-wide metrics
     - `sourceFilter` - (optional) a regular expression to match the source name value on
     - `metricFilter` - (optional) a regular expression to match the metric name value on
+- `fabric.routers` - (optional) Fabric router events
+- `sdk` - (optional) emitted when an sdk's connectivity to routers changes.
+- `edge.sessions`  - (optional) Session events
+    - `include` - (optional) a string or array of strings that specify which Session events to
+      include ("created"
+      and/or "deleted")
 - `services` - (optional) Service events
+- `fabric.terminators` - (optional) emitted at various points in the terminator lifecycle
+- `fabric.usage` - (optional) Fabric usage events
+    - `version` - (optional) a string representing the value of the usage event to use ("2' or "3")
 
 The properties in the `handler` section depend on handler `type` (one of `file`, `stdout`,
 or `amqp`):
